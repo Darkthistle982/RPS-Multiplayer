@@ -7,3 +7,20 @@ var config = {
     storageBucket: "rps-live-71692.appspot.com",
     messagingSenderId: "736046736181",
 };
+firebase.initializeApp(config);
+//variables needed for our game go here
+//-----------------------------------------------------------------------------------------
+var database = firebase.database();
+
+//functions & events go here
+//-----------------------------------------------------------------------------------------
+
+
+
+//Main Process goes here
+//-----------------------------------------------------------------------------------------
+
+
+
+
+

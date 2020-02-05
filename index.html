@@ -19,6 +19,8 @@
     <!-- Header to include main title and basic instructions -->
     <header class="jumbotron text-center">
         <h1>Rock, Paper, Scissors - Live!</h1>
+        <h4>Once 2 players are logged in, you can play a live game of RPS.</h4>
+        <h4>The game will prompt you when it's your turn. Make a choice and use the chatbox to talk some smack!</h4>
     </header>
 
     <!-- Main section. will contain 3 columns -->
@@ -26,14 +28,14 @@
     <div class="container-fluid">
         <div class="row">
             <section id="player1" class="container col-4 text-center">
-                <div class="" id="player1-name">player1</div>
+                <div class="bg-light" id="player1-name">player1</div>
                 <div id="player1-wins"></div>
                 <div id="player1-ties"></div>
                 <div id="player1-losses"></div>
             </section>
             <!-- Results and win/loss data  -->
             <section id="stats" class="col-4 container text-center">
-                <div class="" id="stats-title">stats</div>
+                <div class="bg-light" id="stats-title">stats</div>
                 <div id="results"></div>
                 <div id="player1-choice"></div>
                 <div id="player2-choice"></div>
@@ -41,7 +43,7 @@
             </section>
             <!-- Player 2 data -->
             <section id="player2" class="col-4 container text-center">
-                <div class="" id="player2-name">player2</div>
+                <div class="bg-light" id="player2-name">player2</div>
                 <div id="player2-wins"></div>
                 <div id="player2-ties"></div>
                 <div id="player2-losses"></div>
@@ -50,12 +52,12 @@
     </div>
 
     <!-- Chatbox -->
-    <section id="chatbox" class="container-float">
+    <section id="chatbox" class="container text-center mt-4">
         <div class="row">
             <div class="col-4">
                 <form>
                     <div class="form-group">
-                        <textarea readonly class="form-control" rows="6" id="chatTextArea"></textarea>
+                        <textarea readonly class="form-control" rows="8" id="chatTextArea"></textarea>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" id="inputChatText" placeholder="Send a message">
@@ -76,7 +78,7 @@
 
 
     <section class="container">
-        <footer class="footer mt-auto py-3">
+        <footer class="footer mt-auto py-3 bg-light">
             <div class="container">
                 <span class="text-muted">Have you played D&D yet? It's never too late to start. <a
                         href="https://brianallen2401.wixsite.com/mysite" target="_blank"

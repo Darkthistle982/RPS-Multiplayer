@@ -12,6 +12,20 @@ firebase.initializeApp(config);
 //-----------------------------------------------------------------------------------------
 var database = firebase.database();
 
+var p1Wins;
+var p1Losses;
+var p1Ties;
+var p1Name;
+var p1Choice;
+
+var p2Wins;
+var p2Losses;
+var p2Ties;
+var p2Name;
+var p2Choice;
+
+var playerTurn;
+var whoAmI = "none";
 //functions & events go here
 //-----------------------------------------------------------------------------------------
 

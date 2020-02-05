@@ -50,7 +50,22 @@
     </div>
 
     <!-- Chatbox -->
-    <section id="chatbox">
+    <section id="chatbox" class="container-float">
+        <div class="row">
+            <div class="col-4">
+                <form>
+                    <div class="form-group">
+                        <textarea readonly class="form-control" rows="6" id="chatTextArea"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputChatText" placeholder="Send a message">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" id="chatSubmit">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </section>
 

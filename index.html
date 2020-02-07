@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/6a9dea6d2f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Righteous&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
     <script src='https://www.gstatic.com/firebasejs/7.8.1/firebase-database.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -25,14 +26,14 @@
 
     <!-- Main section. will contain 3 columns -->
     <!-- Player 1 data-->
-    <div class="container-fluid">
+    <div class="container-fluid" id="gamedata">
         <div class="row">
             <section id="player1" class="container col-4 text-center">
                 <div class="bg-light" id="player1-name">player1</div>
-                <div class="input-buttons m-1">
-                    <button class="btn-lg btn-dark" id="p1Rock" value="r">Rock <i class="fas fa-hand-rock"></i></button>
-                    <button class="btn-lg btn-info" id="p1Paper"value="p">Paper <i class="fas fa-hand-paper"></i></button>
-                    <button class="btn-lg btn-danger" id="p1Scissors" value="s">Scissors <i class="fas fa-hand-scissors"></i></button> 
+                <div class="input-buttons m-2">
+                    <button class="btn btn-dark" id="p1Rock" value="r">Rock <i class="fas fa-hand-rock"></i></button>
+                    <button class="btn btn-info" id="p1Paper"value="p">Paper <i class="fas fa-hand-paper"></i></button>
+                    <button class="btn btn-danger" id="p1Scissors" value="s">Scissors <i class="fas fa-hand-scissors"></i></button> 
                 </div>
                 <div id="player1-wins"></div>
                 <div id="player1-ties"></div>
@@ -49,10 +50,10 @@
             <!-- Player 2 data -->
             <section id="player2" class="col-4 container text-center">
                 <div class="bg-light" id="player2-name">player2</div>
-                <div class="input-buttons m-1">
-                    <button class="btn-lg btn-dark" id="p2Rock" value="r">Rock <i class="fas fa-hand-rock"></i></button>
-                    <button class="btn-lg btn-info" id="p2Paper" value="p">Paper <i class="fas fa-hand-paper"></i></button>
-                    <button class="btn-lg btn-danger" id="p2Scissors" value="s">Scissors <i class="fas fa-hand-scissors"></i></button> 
+                <div class="input-buttons m-2">
+                    <button class="btn btn-dark" id="p2Rock" value="r">Rock <i class="fas fa-hand-rock"></i></button>
+                    <button class="btn btn-info" id="p2Paper" value="p">Paper <i class="fas fa-hand-paper"></i></button>
+                    <button class="btn btn-danger" id="p2Scissors" value="s">Scissors <i class="fas fa-hand-scissors"></i></button> 
                 </div>
                 <div id="player2-wins"></div>
                 <div id="player2-ties"></div>

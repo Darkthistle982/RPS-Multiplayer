@@ -94,7 +94,6 @@ database.ref().on("value", function (snapshot) {
 //function to submit messages to the chatbox
 $("#chatSubmit").on("click", function (event) {
   event.preventDefault();
-  console.log("clicked")
   message = $("#inputChatText").val().trim();
   database.ref('collection/').push({
     message: message

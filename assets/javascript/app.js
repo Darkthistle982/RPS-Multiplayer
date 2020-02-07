@@ -107,3 +107,11 @@ database.ref('collection/').on("child_added", function(childsnapshot) {
   $("#chatTextArea").prepend(chatText + '\r\n');
 });
 
+//function to clear the chatlog upon click of button
+$("#clearChatlog").on("click", function (event) {
+  event.preventDefault();
+  database.ref().update({
+    collection: null
+  });
+  $("#chatTextArea").empty();
+})

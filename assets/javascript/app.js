@@ -26,10 +26,22 @@ var p2Name;
 var p2Choice;
 
 var playerTurn;
-var whoAmI = "none";
 //functions & events go here
 //-----------------------------------------------------------------------------------------
+$("button").on("click", function() {
 
+p1Choice = $(this).val();
+p2Choice = $(this).val();
+console.log(p1Choice);
+
+
+
+
+
+
+
+
+})
 
     
     

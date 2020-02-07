@@ -29,13 +29,19 @@ var playerTurn;
 //functions & events go here
 //-----------------------------------------------------------------------------------------
 $(".p1-button").on("click", function() {
-
+$("#player1-choice").empty();
 p1Choice = $(this).val();
 console.log(p1Choice);
 var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
 $("#player1-choice").append(p1Display);
 })
 
-    
+$(".p2-button").on("click", function() {
+  $("#player2-choice").empty();
+  p2Choice = $(this).val();
+  console.log(p2Choice);
+  var p2Display = $("<p>").text("Player 2 chose: " + p1Choice);
+  $("#player2-choice").append(p2Display);
+  })    
     
 

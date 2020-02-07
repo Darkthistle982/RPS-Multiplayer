@@ -13,23 +13,26 @@ firebase.initializeApp(firebaseConfig);
 //-----------------------------------------------------------------------------------------
 var database = firebase.database();
 
-var p1Wins;
-var p1Losses;
-var p1Ties;
+var p1Wins = 0;
+var p1Losses = 0;
 var p1Name;
 var p1Choice;
 
-var p2Wins;
-var p2Losses;
-var p2Ties;
+var p2Wins = 0;
+var p2Losses = 0;
 var p2Name;
 var p2Choice;
 
+var ties = 0;
 var playerTurn;
+var initialChoice = ""
+
 function reset() {
+  p1Choice = initialChoice;
+  p2Choice = initialChoice;
   database.ref().update({
-    p1Choice: "",
-    p2Choice: ""
+    p1Choice: initialChoice,
+    p2Choice: initialChoice,
   })
 }
 
@@ -41,30 +44,23 @@ function game() {
     (p1Choice === "Paper" && p2Choice === "Rock")) {
     p1Wins++;
     p2Losses++;
-    database.ref().update({
-      p1Wins: p1Wins,
-      p2Losses: p2Losses
-    })
   }
   else if ((p2Choice === "Rock" && p1Choice === "Scissors") ||
     (p2Choice === "Scissors" && p1Choice === "Paper") ||
     (p2Choice === "Paper" && p1Choice === "Rock")) {
     p2Wins++;
     p1Losses++;
-    database.ref().update({
-      p1Losses: p1Losses,
-      p2Wins: p2Wins
-    });
   }
   else if (p2Choice === p1Choice) {
-      p1Ties++;
-      p1Ties++;
-      database.ref().update({
-        p1Ties: p1Ties,
-        p2Ties: p2Ties
-      });
+      ties++;
     }
-
+    database.ref().update({
+      p1Wins: p2Wins,
+      p1Losses: p1Losses,
+      p2Wins: p1Wins,
+      p2Losses: p2Losses,
+      ties: ties
+    });
 
 
   }
@@ -99,5 +95,3 @@ $(".p2-button").on("click", function () {
 
 
 
-
-game();

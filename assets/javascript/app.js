@@ -26,27 +26,26 @@ var p2Name;
 var p2Choice;
 
 var playerTurn;
-//functions & events go here
-//-----------------------------------------------------------------------------------------
+//onclick function to log p1 choices to the db
 $(".p1-button").on("click", function () {
-  $("#player1-choice").empty();
   p1Choice = $(this).val();
-  console.log(p1Choice);
-  // var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
-  // $("#player1-choice").append(p1Display);
   database.ref().update({
-    p1Picks: p1Choice 
+    p1Choice: p1Choice 
   });
 });
-
+//onclick function to log p2 choices to the db
 $(".p2-button").on("click", function () {
-  $("#player2-choice").empty();
   p2Choice = $(this).val();
-  console.log(p2Choice);
-  // var p2Display = $("<p>").text("Player 2 chose: " + p1Choice);
-  // $("#player2-choice").append(p2Display);
   database.ref().update({
-    p2Picks: p2Choice
+    p2Choice: p2Choice
   });
 });
-
+//on value funtion to watch the DB, and update the result on the page dynamically
+database.ref().on("value", function(snapshot) {
+  p1Choice = snapshot.val().p1Choice;
+  p2Choice = snapshot.val().p2Choice;
+  var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
+  $("#player2-choice").html(p2Display);
+  var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
+  $("#player1-choice").html(p1Display);
+});

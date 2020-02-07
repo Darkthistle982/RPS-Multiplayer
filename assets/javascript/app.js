@@ -99,15 +99,12 @@ $("#chatSubmit").on("click", function (event) {
   database.ref('collection/').push({
     message: message
   });
-  $("#inputChatText").empty();
-}, function(errorObject){
-  console.log("Errors handled: " + errorObject.code);
+  $("#inputChatText").val(" ");
 });
 
 //function to read and display messages to the chatbox
 database.ref('collection/').on("child_added", function(childsnapshot) {
-  $("#chatTextArea").html(childsnapshot);
-}, function(errorObject){
-  console.log("Errors handled: " + errorObject.code);
+  var chatText = childsnapshot.val().message;
+  $("#chatTextArea").prepend(chatText + '\r\n');
 });
 

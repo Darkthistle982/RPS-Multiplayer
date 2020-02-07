@@ -52,18 +52,18 @@ function game() {
     p1Losses++;
   }
   else if (p2Choice === p1Choice) {
-      ties++;
-    }
-    database.ref().update({
-      p1Wins: p2Wins,
-      p1Losses: p1Losses,
-      p2Wins: p1Wins,
-      p2Losses: p2Losses,
-      ties: ties
-    });
-
-
+    ties++;
   }
+  database.ref().update({
+    p1Wins: p2Wins,
+    p1Losses: p1Losses,
+    p2Wins: p1Wins,
+    p2Losses: p2Losses,
+    ties: ties
+  });
+
+
+}
 
 //onclick function to log p1 choices to the db
 $(".p1-button").on("click", function () {
@@ -79,19 +79,35 @@ $(".p2-button").on("click", function () {
     p2Choice: p2Choice
   });
 });
-   
-//on value funtion to watch the DB, and update the result on the page dynamically
-  database.ref().on("value", function (snapshot) {
+
+//on value funtion to watch the DB, and update the result on the page dynamically.
+database.ref().on("value", function (snapshot) {
   p1Choice = snapshot.val().p1Choice;
   p2Choice = snapshot.val().p2Choice;
   var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
   $("#player2-choice").html(p2Display);
   var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
   $("#player1-choice").html(p1Display);
+
 });
 
+//function to submit messages to the chatbox
+$("#chatSubmit").on("click", function (event) {
+  event.preventDefault();
+  console.log("clicked")
+  message = $("#inputChatText").val().trim();
+  database.ref('collection/').push({
+    message: message
+  });
+  $("#inputChatText").empty();
+}, function(errorObject){
+  console.log("Errors handled: " + errorObject.code);
+});
 
-
-
-
+//function to read and display messages to the chatbox
+database.ref('collection/').on("child_added", function(childsnapshot) {
+  $("#chatTextArea").html(childsnapshot);
+}, function(errorObject){
+  console.log("Errors handled: " + errorObject.code);
+});
 

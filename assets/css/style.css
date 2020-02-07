@@ -1,3 +1,11 @@
 body {
     background-image: url(../images/cork-board.png);
 }
+
+.jumbotron {
+    font-family: 'Righteous', cursive;
+}
+
+#gamedata {
+    font-family: 'Press Start 2P', cursive;
+}

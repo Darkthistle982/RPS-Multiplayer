@@ -37,7 +37,6 @@ function reset() {
 }
 
 function game() {
-  reset();
 
   if ((p1Choice === "Rock" && p2Choice === "Scissors") ||
     (p1Choice === "Scissors" && p2Choice === "Paper") ||
@@ -61,10 +60,8 @@ function game() {
     p2Losses: p2Losses,
     ties: ties
   });
-
-
 }
-
+game();
 //onclick function to log p1 choices to the db
 $(".p1-button").on("click", function () {
   p1Choice = $(this).val();
@@ -88,7 +85,6 @@ database.ref().on("value", function (snapshot) {
   $("#player2-choice").html(p2Display);
   var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
   $("#player1-choice").html(p1Display);
-
 });
 
 //function to submit messages to the chatbox

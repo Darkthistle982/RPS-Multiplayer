@@ -25,7 +25,8 @@ var p2Choice;
 
 var ties = 0;
 var playerTurn;
-var initialChoice = ""
+var initialChoice = "";
+var scoreLogged = false;
 
 function reset() {
   p1Choice = initialChoice;
@@ -34,7 +35,9 @@ function reset() {
     p1Choice: initialChoice,
     p2Choice: initialChoice,
   })
+  watchForSnapshot();
 }
+reset();
 
 function game() {
 
@@ -50,18 +53,18 @@ function game() {
     p2Wins++;
     p1Losses++;
   }
-  else if (p2Choice === p1Choice) {
+  else {
     ties++;
   }
   database.ref().update({
-    p1Wins: p2Wins,
+    p1Wins: p1Wins,
     p1Losses: p1Losses,
-    p2Wins: p1Wins,
+    p2Wins: p2Wins,
     p2Losses: p2Losses,
     ties: ties
   });
 }
-game();
+// game();
 //onclick function to log p1 choices to the db
 $(".p1-button").on("click", function () {
   p1Choice = $(this).val();
@@ -77,15 +80,24 @@ $(".p2-button").on("click", function () {
   });
 });
 
-//on value funtion to watch the DB, and update the result on the page dynamically.
-database.ref().on("value", function (snapshot) {
-  p1Choice = snapshot.val().p1Choice;
-  p2Choice = snapshot.val().p2Choice;
-  var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
-  $("#player2-choice").html(p2Display);
-  var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
-  $("#player1-choice").html(p1Display);
-});
+
+function watchForSnapshot() {
+  //on value funtion to watch the DB, and update the result on the page dynamically.
+  database.ref().on("value", function (snapshot) {
+    p1Choice = snapshot.val().p1Choice;
+    p2Choice = snapshot.val().p2Choice;
+    var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
+    $("#player2-choice").html(p2Display);
+    var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
+    $("#player1-choice").html(p1Display);
+    if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
+      console.log('working')
+      scoreLogged = true;
+      game();
+    }
+  });
+
+}
 
 //function to submit messages to the chatbox
 $("#chatSubmit").on("click", function (event) {
@@ -98,7 +110,7 @@ $("#chatSubmit").on("click", function (event) {
 });
 
 //function to read and display messages to the chatbox
-database.ref('collection/').on("child_added", function(childsnapshot) {
+database.ref('collection/').on("child_added", function (childsnapshot) {
   var chatText = childsnapshot.val().message;
   $("#chatTextArea").prepend(chatText + '\r\n');
 });

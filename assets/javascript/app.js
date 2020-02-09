@@ -93,6 +93,11 @@ function watchForSnapshot() {
     p2Choice = snapshot.val().p2Choice;
     p1Wins = snapshot.val().p1Wins;
     p2Wins = snapshot.val().p2Wins;
+    p1Losses = snapshot.val().p1Losses;
+    p2Losses = snapshot.val().p2Losses;
+    ties = snapshot.val().ties;
+    var tiesDisplay = $("<p>").text("Ties " + ties);
+    $(".ties").html(tiesDisplay);
     var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
     $("#player2-choice").html(p2Display);
     var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
@@ -101,6 +106,10 @@ function watchForSnapshot() {
     $("#player1-wins").html(p1WinDisplay);
     var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
     $("#player2-wins").html(p2WinDisplay);
+    var p1LossDisplay = $("<p>").text("P1 Losses: " + p1Losses);
+    $("#player1-losses").html(p1LossDisplay);
+    var p2LossDisplay = $("<p>").text("P2 Losses: " + p2Losses);
+    $("#player2-losses").html(p2LossDisplay);
     if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
       scoreLogged = true;
       game();

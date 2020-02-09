@@ -86,24 +86,26 @@ $(".p2-button").on("click", function () {
   });
 });
 
-
 function watchForSnapshot() {
   //on value funtion to watch the DB, and update the result on the page dynamically.
   database.ref().on("value", function (snapshot) {
     p1Choice = snapshot.val().p1Choice;
     p2Choice = snapshot.val().p2Choice;
-
+    p1Wins = snapshot.val().p1Wins;
+    p2Wins = snapshot.val().p2Wins;
     var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
     $("#player2-choice").html(p2Display);
     var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
     $("#player1-choice").html(p1Display);
+    var p1WinDisplay = $("<p>").text("P1 Wins: " + p1Wins);
+    $("#player1-wins").html(p1WinDisplay);
+    var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
+    $("#player2-wins").html(p2WinDisplay);
     if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
-      console.log('working')
       scoreLogged = true;
       game();
     }
   });
-
 }
 
 //function to submit messages to the chatbox

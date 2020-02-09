@@ -141,3 +141,15 @@ $("#clearChatlog").on("click", function (event) {
   });
   $("#chatTextArea").empty();
 })
+
+//function to reset the player scores on click
+$("#score-reset").on("click", function (event) {
+  event.preventDefault();
+  database.ref().update({
+    p1Wins: 0,
+    p2Wins: 0,
+    p1Losses: 0,
+    p2Losses: 0,
+    ties: 0
+  })
+})

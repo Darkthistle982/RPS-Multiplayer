@@ -112,6 +112,8 @@ function watchForSnapshot() {
     $("#player2-name").text("Player2: " + p2Display);
     var tiesDisplayP1 = $("<p>").text("P1 Ties " + p1Ties);
     $("#p1ties").html(tiesDisplayP1);
+    var tiesDisplayP2 = $("<p>").text("P2 Ties " + p2Ties);
+    $("#p2ties").html(tiesDisplayP2);
     var p1WinDisplay = $("<p>").text("P1 Wins: " + p1Wins);
     $("#player1-wins").html(p1WinDisplay);
     var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
@@ -179,7 +181,7 @@ $("#p1Logout").on("click", function() {
     p1Name: "",
     p1Wins: 0,
     p1Losses: 0,
-    p1Ties: p1Ties
+    p1Ties: 0
   })
   p1Name = undefined;
 });
@@ -189,7 +191,7 @@ $("#p2Logout").on("click", function() {
     p2Name: "",
     p2Wins: 0,
     p2Losses: 0,
-    p2Ties: p1Ties
+    p2Ties: 0
   })
   p2Name = undefined;
 });

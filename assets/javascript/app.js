@@ -159,5 +159,3 @@ $("#score-reset").on("click", function (event) {
     ties: 0
   })
 })
-
-//function to hide/show the results and run the 

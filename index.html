@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/6a9dea6d2f.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Righteous&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
     <script src='https://www.gstatic.com/firebasejs/7.8.1/firebase-database.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>RPS - LIVE</title>
 </head>
 
@@ -20,6 +20,39 @@
     <!-- Header to include main title and basic instructions -->
     <header class="jumbotron text-center">
         <h1>Rock, Paper, Scissors - Live!</h1>
+        <!--button to trigger the login modal-->
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#loginModal">Login to play</button>
+        <!--modal data-->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Login Here</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                       <form>
+                           <div class="form-group">
+                               <label for="userEmail">Email Address</label>
+                               <input type="email" class="form-control" id="userEmail" araia-describedby="emailHelp">
+                               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                           </div>
+                           <div class="form-group">
+                               <label for="inputPassword">Password</label>
+                               <input type="password" class="form-control" id="inputPassword">
+                           </div>
+                           <button type="submit" class="btn btn-secondary">Submit</button>
+                       </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-dark">Save User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- <h4>Once 2 players are logged in, you can play a live game of RPS.</h4>
         <h4>The game will prompt you when it's your turn. Make a choice and use the chatbox to talk some smack!</h4> -->
     </header>
@@ -31,9 +64,12 @@
             <section id="player1" class="container col-4 text-center">
                 <div class="bg-light" id="player1-name">Player 1:</div>
                 <div class="input-buttons m-2">
-                    <button class="btn btn-dark p1-button" id="p1Rock" value="Rock">Rock <i class="fas fa-hand-rock"></i></button>
-                    <button class="btn btn-info p1-button" id="p1Paper"value="Paper">Paper <i class="fas fa-hand-paper"></i></button>
-                    <button class="btn btn-danger p1-button" id="p1Scissors" value="Scissors">Scissors <i class="fas fa-hand-scissors"></i></button> 
+                    <button class="btn btn-dark p1-button" id="p1Rock" value="Rock">Rock <i
+                            class="fas fa-hand-rock"></i></button>
+                    <button class="btn btn-info p1-button" id="p1Paper" value="Paper">Paper <i
+                            class="fas fa-hand-paper"></i></button>
+                    <button class="btn btn-danger p1-button" id="p1Scissors" value="Scissors">Scissors <i
+                            class="fas fa-hand-scissors"></i></button>
                 </div>
                 <div id="player1-wins"></div>
                 <div id="player1-losses"></div>
@@ -43,7 +79,6 @@
             <section id="stats" class="col-4 container text-center ">
                 <div class="bg-light" id="stats-title">Game Stats</div>
                 <div class="bg-secondary mt-2 mb-2 pt-2 pb-2 text-white">
-                    <div id="turninfo"></div>
                     <div id="results"></div>
                     <div id="player1-choice"></div>
                     <div id="player2-choice"></div>
@@ -54,9 +89,12 @@
             <section id="player2" class="col-4 container text-center">
                 <div class="bg-light" id="player2-name">Player 2:</div>
                 <div class="input-buttons m-2">
-                    <button class="btn btn-dark p2-button" id="p2Rock" value="Rock">Rock <i class="fas fa-hand-rock"></i></button>
-                    <button class="btn btn-info p2-button" id="p2Paper" value="Paper">Paper <i class="fas fa-hand-paper"></i></button>
-                    <button class="btn btn-danger p2-button" id="p2Scissors" value="Scissors">Scissors <i class="fas fa-hand-scissors"></i></button> 
+                    <button class="btn btn-dark p2-button" id="p2Rock" value="Rock">Rock <i
+                            class="fas fa-hand-rock"></i></button>
+                    <button class="btn btn-info p2-button" id="p2Paper" value="Paper">Paper <i
+                            class="fas fa-hand-paper"></i></button>
+                    <button class="btn btn-danger p2-button" id="p2Scissors" value="Scissors">Scissors <i
+                            class="fas fa-hand-scissors"></i></button>
                 </div>
                 <div id="player2-wins"></div>
                 <div id="player2-losses"></div>
@@ -104,6 +142,15 @@
         </footer>
     </section>
     <script src="./assets/javascript/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

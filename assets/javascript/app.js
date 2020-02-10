@@ -159,3 +159,26 @@ $("#score-reset").on("click", function (event) {
     ties: 0
   })
 })
+
+//function to login new player from the popup modal
+$("#logInUser").on("click", function (event) {
+  event.preventDefault();
+  var playerName = $("#userName").val().trim();
+  if (p1Name === undefined) {
+    database.ref().update({
+      p1Name: playerName
+    })
+    p1Name = playerName;
+    $("#player1-name").text(playerName);
+  }
+  else if (p1Name !== undefined && p2Name === undefined) {
+    database.ref().update({
+      p2Name: playerName
+    })
+    p2Name = playerName;
+    $("#player2-name").text(playerName);
+  }
+  else {
+    alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
+  }
+})

@@ -20,8 +20,10 @@
     <!-- Header to include main title and basic instructions -->
     <header class="jumbotron text-center">
         <h1>Rock, Paper, Scissors - Live!</h1>
+        <h4>Once 2 players are logged in, you can play a live game of RPS.</h4>
+        <h4>The game will will wait for both players to choose. Click your option and use the chatbox to talk some smack!</h4>
         <!--button to trigger the login modal-->
-        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#loginModal">Login to play</button>
+        <button type="button" class="btn-lg btn-secondary" data-toggle="modal" data-target="#loginModal">Login to play</button>
         <!--modal data-->
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -47,8 +49,6 @@
                 </div>
             </div>
         </div>
-        <!-- <h4>Once 2 players are logged in, you can play a live game of RPS.</h4>
-        <h4>The game will prompt you when it's your turn. Make a choice and use the chatbox to talk some smack!</h4> -->
     </header>
 
     <!-- Main section. will contain 3 columns -->
@@ -68,6 +68,7 @@
                 <div id="player1-wins"></div>
                 <div id="player1-losses"></div>
                 <div class="ties"></div>
+                <button type="button" class="btn btn-sm btn-warning" id="p1Logout">Logout P1</button>
             </section>
             <!-- Results and win/loss data  -->
             <section id="stats" class="col-4 container text-center ">
@@ -93,6 +94,7 @@
                 <div id="player2-wins"></div>
                 <div id="player2-losses"></div>
                 <div class="ties"></div>
+                <button type="button" class="btn btn-sm btn-warning" id="p2Logout">Logout P2</button>
             </section>
         </div>
     </div>

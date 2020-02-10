@@ -169,16 +169,31 @@ $("#logInUser").on("click", function (event) {
       p1Name: playerName
     })
     p1Name = playerName;
-    $("#player1-name").text(playerName);
+    // $("#player1-name").text(playerName);
   }
   else if (p1Name !== undefined && p2Name === undefined) {
     database.ref().update({
       p2Name: playerName
     })
     p2Name = playerName;
-    $("#player2-name").text(playerName);
+    // $("#player2-name").text(playerName);
   }
   else {
     alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
   }
-})
+});
+
+//function to create a logout option once a player is logged in
+$("#p1Logout").on("click", function() {
+  database.ref().update({
+    p1Name: ""
+  })
+  p1Name = "";
+});
+
+$("#p2Logout").on("click", function() {
+  database.ref().update({
+    p2Name: ""
+  })
+  p2Name = "";
+});

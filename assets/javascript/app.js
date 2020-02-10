@@ -15,15 +15,16 @@ var database = firebase.database();
 
 var p1Wins = 0;
 var p1Losses = 0;
+var p1Ties = 0;
 var p1Name;
 var p1Choice;
 
 var p2Wins = 0;
 var p2Losses = 0;
+var p2Ties = 0;
 var p2Name;
 var p2Choice;
 
-var ties = 0;
 var playerTurn;
 var initialChoice = "";
 var scoreLogged = false;
@@ -102,12 +103,12 @@ function watchForSnapshot() {
     p1Losses = snapshot.val().p1Losses;
     p2Losses = snapshot.val().p2Losses;
     ties = snapshot.val().ties;
+    p1Display = snapshot.val().p1Name;
+    p2Display = snapshot.val().p2Name;
+    $("#player1-name").text("Player1: " + p1Display);
+    $("#player2-name").text("Player2: " + p2Display);
     var tiesDisplay = $("<p>").text("Ties " + ties);
     $(".ties").html(tiesDisplay);
-    // var p2Display = $("<p>").text("Player 2 chose: ");
-    // $("#player2-choice").html(p2Display);
-    // var p1Display = $("<p>").text("Player 1 chose: ");
-    // $("#player1-choice").html(p1Display);
     var p1WinDisplay = $("<p>").text("P1 Wins: " + p1Wins);
     $("#player1-wins").html(p1WinDisplay);
     var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
@@ -186,14 +187,17 @@ $("#logInUser").on("click", function (event) {
 //function to create a logout option once a player is logged in
 $("#p1Logout").on("click", function() {
   database.ref().update({
-    p1Name: ""
+    p1Name: "",
+    p1Wins: 0,
+    p1Losses: 0
   })
-  p1Name = "";
+  p1Name = undefined;
 });
 
 $("#p2Logout").on("click", function() {
   database.ref().update({
     p2Name: ""
   })
-  p2Name = "";
+  p2Name = undefined;
 });
+

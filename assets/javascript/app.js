@@ -62,7 +62,8 @@ function game() {
     $("#results").append(player2Wins);
   }
   else {
-    ties++;
+    p1Ties++;
+    p2Ties++;
     $("#results").text("That's a tie!!")
   }
   database.ref().update({
@@ -72,7 +73,8 @@ function game() {
     p1Losses: p1Losses,
     p2Wins: p2Wins,
     p2Losses: p2Losses,
-    ties: ties
+    p1Ties: p1Ties,
+    p2Ties: p2Ties
   });
   $("#player1-choice").html("<p>Player 1 chose: " + p1Choice + "</p>");
   $("#player2-choice").html("<p>Player 2 chose: " + p2Choice + "</p>");
@@ -102,13 +104,14 @@ function watchForSnapshot() {
     p2Wins = snapshot.val().p2Wins;
     p1Losses = snapshot.val().p1Losses;
     p2Losses = snapshot.val().p2Losses;
-    ties = snapshot.val().ties;
+    p1Ties = snapshot.val().p1Ties;
+    p2Ties = snapshot.val().p2Ties;
     p1Display = snapshot.val().p1Name;
     p2Display = snapshot.val().p2Name;
     $("#player1-name").text("Player1: " + p1Display);
     $("#player2-name").text("Player2: " + p2Display);
-    var tiesDisplay = $("<p>").text("Ties " + ties);
-    $(".ties").html(tiesDisplay);
+    var tiesDisplayP1 = $("<p>").text("P1 Ties " + p1Ties);
+    $("#p1ties").html(tiesDisplayP1);
     var p1WinDisplay = $("<p>").text("P1 Wins: " + p1Wins);
     $("#player1-wins").html(p1WinDisplay);
     var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
@@ -149,18 +152,6 @@ $("#clearChatlog").on("click", function (event) {
   $("#chatTextArea").empty();
 })
 
-//function to reset the player scores on click
-$("#score-reset").on("click", function (event) {
-  event.preventDefault();
-  database.ref().update({
-    p1Wins: 0,
-    p2Wins: 0,
-    p1Losses: 0,
-    p2Losses: 0,
-    ties: 0
-  })
-})
-
 //function to login new player from the popup modal
 $("#logInUser").on("click", function (event) {
   event.preventDefault();
@@ -170,14 +161,12 @@ $("#logInUser").on("click", function (event) {
       p1Name: playerName
     })
     p1Name = playerName;
-    // $("#player1-name").text(playerName);
   }
   else if (p1Name !== undefined && p2Name === undefined) {
     database.ref().update({
       p2Name: playerName
     })
     p2Name = playerName;
-    // $("#player2-name").text(playerName);
   }
   else {
     alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
@@ -189,14 +178,18 @@ $("#p1Logout").on("click", function() {
   database.ref().update({
     p1Name: "",
     p1Wins: 0,
-    p1Losses: 0
+    p1Losses: 0,
+    p1Ties: p1Ties
   })
   p1Name = undefined;
 });
 
 $("#p2Logout").on("click", function() {
   database.ref().update({
-    p2Name: ""
+    p2Name: "",
+    p2Wins: 0,
+    p2Losses: 0,
+    p2Ties: p1Ties
   })
   p2Name = undefined;
 });

@@ -32,6 +32,8 @@ function reset() {
   p1Choice = initialChoice;
   p2Choice = initialChoice;
   scoreLogged = false;
+  $("#player1-choice").html("<p>Player 1 chose: " + p1Choice + "</p>");
+  $("#player2-choice").html("<p>Player 2 chose: " + p2Choice + "</p>");
   $("#results").empty();
   database.ref().update({
     p1Choice: initialChoice,
@@ -63,12 +65,16 @@ function game() {
     $("#results").text("That's a tie!!")
   }
   database.ref().update({
+    p1Choice: p1Choice,
+    p2Choice: p2Choice,
     p1Wins: p1Wins,
     p1Losses: p1Losses,
     p2Wins: p2Wins,
     p2Losses: p2Losses,
     ties: ties
   });
+  $("#player1-choice").html("<p>Player 1 chose: " + p1Choice + "</p>");
+  $("#player2-choice").html("<p>Player 2 chose: " + p2Choice + "</p>");
   setTimeout(reset, 5 * 1000);
 }
 //onclick function to log p1 choices to the db
@@ -98,10 +104,10 @@ function watchForSnapshot() {
     ties = snapshot.val().ties;
     var tiesDisplay = $("<p>").text("Ties " + ties);
     $(".ties").html(tiesDisplay);
-    var p2Display = $("<p>").text("Player 2 chose: " + p2Choice);
-    $("#player2-choice").html(p2Display);
-    var p1Display = $("<p>").text("Player 1 chose: " + p1Choice);
-    $("#player1-choice").html(p1Display);
+    // var p2Display = $("<p>").text("Player 2 chose: ");
+    // $("#player2-choice").html(p2Display);
+    // var p1Display = $("<p>").text("Player 1 chose: ");
+    // $("#player1-choice").html(p1Display);
     var p1WinDisplay = $("<p>").text("P1 Wins: " + p1Wins);
     $("#player1-wins").html(p1WinDisplay);
     var p2WinDisplay = $("<p>").text("P2 Wins: " + p2Wins);
@@ -112,7 +118,7 @@ function watchForSnapshot() {
     $("#player2-losses").html(p2LossDisplay);
     if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
       scoreLogged = true;
-      game();
+      setTimeout(game, 5 * 1000);
     }
   });
 }
@@ -153,3 +159,5 @@ $("#score-reset").on("click", function (event) {
     ties: 0
   })
 })
+
+//function to hide/show the results and run the 

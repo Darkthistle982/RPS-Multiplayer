@@ -28,7 +28,7 @@ var p2Choice;
 var playerTurn;
 var initialChoice = "";
 var scoreLogged = false;
-
+//this funciton is to reset the game state after determining a winner
 function reset() {
   p1Choice = initialChoice;
   p2Choice = initialChoice;
@@ -43,6 +43,7 @@ function reset() {
   watchForSnapshot();
 }
 reset();
+//this function runs the game logic to determine winner, loser and ties and increments the stats
 function game() {
   var player1Wins = $("<p>").text("Player 1 is the winner!");
   var player2Wins = $("<p>").text("Player 2 is the winner!");
@@ -158,25 +159,31 @@ $("#clearChatlog").on("click", function (event) {
 $("#logInUser").on("click", function (event) {
   event.preventDefault();
   var playerName = $("#userName").val().trim();
-  if (p1Name === undefined) {
-    database.ref().update({
-      p1Name: playerName
-    })
-    p1Name = playerName;
-  }
-  else if (p1Name !== undefined && p2Name === undefined) {
-    database.ref().update({
-      p2Name: playerName
-    })
-    p2Name = playerName;
-  }
-  else {
-    alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
-  }
+  var pNameRef = firebase.database().ref();
+  pNameRef.once("value")
+    .then(function (snapshot) {
+      var p1username = snapshot.val().p1Name;
+      var p2username = snapshot.val().p2Name;
+      if (p1username === "") {
+        database.ref().update({
+          p1Name: playerName
+        })
+        p1Name = playerName;
+      }
+      else if (p1username !== "" && p2username === "") {
+        database.ref().update({
+          p2Name: playerName
+        })
+        p2Name = playerName;
+      }
+      else {
+        alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
+      }
+    });
 });
 
-//function to create a logout option once a player is logged in
-$("#p1Logout").on("click", function() {
+//functions to create a logout option once a player is logged in
+$("#p1Logout").on("click", function () {
   database.ref().update({
     p1Name: "",
     p1Wins: 0,
@@ -186,7 +193,7 @@ $("#p1Logout").on("click", function() {
   p1Name = undefined;
 });
 
-$("#p2Logout").on("click", function() {
+$("#p2Logout").on("click", function () {
   database.ref().update({
     p2Name: "",
     p2Wins: 0,

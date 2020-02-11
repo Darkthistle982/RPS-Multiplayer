@@ -24,7 +24,7 @@ var p2Losses = 0;
 var p2Ties = 0;
 var p2Name;
 var p2Choice;
-
+var initialChoice = "";
 var scoreLogged = false;
 //this funciton is to reset the game state after determining a winner
 function reset() {

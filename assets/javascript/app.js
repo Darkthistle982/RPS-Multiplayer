@@ -24,8 +24,10 @@ var p2Losses = 0;
 var p2Ties = 0;
 var p2Name;
 var p2Choice;
+
 var initialChoice = "";
 var scoreLogged = false;
+
 //this funciton is to reset the game state after determining a winner
 function reset() {
   p1Choice = initialChoice;
@@ -41,6 +43,7 @@ function reset() {
   watchForSnapshot();
 }
 reset();
+
 //this function runs the game logic to determine winner, loser and ties and increments the stats
 function game() {
   var player1Wins = $("<p>").text("Player 1 is the winner!");
@@ -177,6 +180,7 @@ $("#logInUser").on("click", function (event) {
       else {
         alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
       }
+      $("#userName").val(" ");
     });
 });
 

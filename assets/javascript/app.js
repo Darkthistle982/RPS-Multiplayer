@@ -25,8 +25,6 @@ var p2Ties = 0;
 var p2Name;
 var p2Choice;
 
-var playerTurn;
-var initialChoice = "";
 var scoreLogged = false;
 //this funciton is to reset the game state after determining a winner
 function reset() {
@@ -96,8 +94,8 @@ $(".p2-button").on("click", function () {
   });
 });
 
+//on value funtion to watch the DB, and update the result on the page dynamically.
 function watchForSnapshot() {
-  //on value funtion to watch the DB, and update the result on the page dynamically.
   database.ref().on("value", function (snapshot) {
     p1Choice = snapshot.val().p1Choice;
     p2Choice = snapshot.val().p2Choice;

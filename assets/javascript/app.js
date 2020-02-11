@@ -154,7 +154,7 @@ $("#clearChatlog").on("click", function (event) {
     collection: null
   });
   $("#chatTextArea").empty();
-})
+});
 
 //function to login new player from the popup modal
 $("#logInUser").on("click", function (event) {
@@ -168,13 +168,13 @@ $("#logInUser").on("click", function (event) {
       if (p1username === "") {
         database.ref().update({
           p1Name: playerName
-        })
+        });
         p1Name = playerName;
       }
       else if (p1username !== "" && p2username === "") {
         database.ref().update({
           p2Name: playerName
-        })
+        });
         p2Name = playerName;
       }
       else {
@@ -205,3 +205,14 @@ $("#p2Logout").on("click", function () {
   p2Name = undefined;
 });
 
+//function to prevent submit button to be pressed without input in the field
+$(function () {
+  $("#userName").keyup(function () {
+    if ($(this).val() == "") {
+      $(".enableOnInput").prop("disabled", true);
+    }
+    else {
+      $(".enableOnInput").prop("disabled", false);
+    }
+  });
+});

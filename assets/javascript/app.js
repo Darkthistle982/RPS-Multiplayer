@@ -27,7 +27,6 @@ var p2Choice;
 
 var initialChoice = "";
 var scoreLogged = false;
-
 //this funciton is to reset the game state after determining a winner
 function reset() {
   p1Choice = initialChoice;
@@ -124,6 +123,20 @@ function watchForSnapshot() {
     $("#player1-losses").html(p1LossDisplay);
     var p2LossDisplay = $("<p>").text("P2 Losses: " + p2Losses);
     $("#player2-losses").html(p2LossDisplay);
+    var p1LoggedIn = snapshot.val().p1Name;
+    var p2LoggedIn = snapshot.val().p2Name;
+    if (p1LoggedIn !== "") {
+      $(".p1-button").show();
+    }
+    else if (p1LoggedIn === "") {
+      $(".p1-button").hide();
+    }
+    else if (p2LoggedIn !== "") {
+      $(".p2-button").show();
+    }
+    else if (p2LoggedIn === "") {
+      $(".p2-button").hide();
+    }
     if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
       scoreLogged = true;
       setTimeout(game, 5 * 1000);
@@ -170,12 +183,14 @@ $("#logInUser").on("click", function (event) {
           p1Name: playerName
         });
         p1Name = playerName;
+        showButtons();
       }
       else if (p1username !== "" && p2username === "") {
         database.ref().update({
           p2Name: playerName
         });
         p2Name = playerName;
+        showButtons();
       }
       else {
         alert("Sorry but all the player seats are taken. Please wait for one of the other users to log out.")
@@ -191,8 +206,10 @@ $("#p1Logout").on("click", function () {
     p1Wins: 0,
     p1Losses: 0,
     p1Ties: 0
+  }).then(function (){
+    p1Name = undefined;
+    showButtons();
   })
-  p1Name = undefined;
 });
 
 $("#p2Logout").on("click", function () {
@@ -201,8 +218,10 @@ $("#p2Logout").on("click", function () {
     p2Wins: 0,
     p2Losses: 0,
     p2Ties: 0
+  }).then(function (){
+    p2Name = undefined;
+    showButtons();
   })
-  p2Name = undefined;
 });
 
 //function to prevent submit button to be pressed without input in the field
@@ -216,3 +235,25 @@ $(function () {
     }
   });
 });
+// //this function is to hide the player choice buttons until someone logs into the game
+function showButtons() {
+  var playerLoggedRef = firebase.database().ref();
+  playerLoggedRef.once("value")
+    .then(function (snapshot) {
+      var p1LoggedIn = snapshot.val().p1Name;
+      var p2LoggedIn = snapshot.val().p2Name;
+      if (p1LoggedIn !== "") {
+        $(".p1-button").show();
+      }
+      else if (p1LoggedIn === "") {
+        $(".p1-button").hide();
+      }
+      if (p2LoggedIn !== "") {
+        $(".p2-button").show();
+      }
+      else if (p2LoggedIn === "") {
+        $(".p2-button").hide();
+      }
+    });
+}
+showButtons();

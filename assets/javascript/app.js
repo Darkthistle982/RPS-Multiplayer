@@ -25,6 +25,8 @@ var p2Ties = 0;
 var p2Name;
 var p2Choice;
 
+var currentUser;
+
 var initialChoice = "";
 var scoreLogged = false;
 //this funciton is to reset the game state after determining a winner
@@ -35,6 +37,8 @@ function reset() {
   $("#player1-choice").html("<p>Player 1 chose: " + p1Choice + "</p>");
   $("#player2-choice").html("<p>Player 2 chose: " + p2Choice + "</p>");
   $("#results").empty();
+  $("#p1choicelocked").empty();
+  $("#p2choicelocked").empty();
   database.ref().update({
     p1Choice: initialChoice,
     p2Choice: initialChoice,
@@ -45,8 +49,8 @@ reset();
 
 //this function runs the game logic to determine winner, loser and ties and increments the stats
 function game() {
-  var player1Wins = $("<p>").text("Player 1 is the winner!");
-  var player2Wins = $("<p>").text("Player 2 is the winner!");
+  var player1Wins = $("<p>").text(p1Name + " is the winner!");
+  var player2Wins = $("<p>").text(p2Name + " is the winner!");
   if ((p1Choice === "Rock" && p2Choice === "Scissors") ||
     (p1Choice === "Scissors" && p2Choice === "Paper") ||
     (p1Choice === "Paper" && p2Choice === "Rock")) {
@@ -83,6 +87,7 @@ function game() {
 }
 //onclick function to log p1 choices to the db
 $(".p1-button").on("click", function () {
+  $("#p1choicelocked").append("<p>" + p1Name + "'s choice locked!</p>");
   p1Choice = $(this).val();
   database.ref().update({
     p1Choice: p1Choice
@@ -90,6 +95,7 @@ $(".p1-button").on("click", function () {
 });
 //onclick function to log p2 choices to the db
 $(".p2-button").on("click", function () {
+  $("#p2choicelocked").append("<p>" + p2Name + "'s choice locked!</p>");
   p2Choice = $(this).val();
   database.ref().update({
     p2Choice: p2Choice
@@ -123,20 +129,6 @@ function watchForSnapshot() {
     $("#player1-losses").html(p1LossDisplay);
     var p2LossDisplay = $("<p>").text("P2 Losses: " + p2Losses);
     $("#player2-losses").html(p2LossDisplay);
-    var p1LoggedIn = snapshot.val().p1Name;
-    var p2LoggedIn = snapshot.val().p2Name;
-    if (p1LoggedIn !== "") {
-      $(".p1-button").show();
-    }
-    else if (p1LoggedIn === "") {
-      $(".p1-button").hide();
-    }
-    else if (p2LoggedIn !== "") {
-      $(".p2-button").show();
-    }
-    else if (p2LoggedIn === "") {
-      $(".p2-button").hide();
-    }
     if (p1Choice !== initialChoice && p2Choice !== initialChoice && scoreLogged === false) {
       scoreLogged = true;
       setTimeout(game, 5 * 1000);
@@ -156,8 +148,9 @@ $("#chatSubmit").on("click", function (event) {
 
 //function to read and display messages to the chatbox
 database.ref('collection/').on("child_added", function (childsnapshot) {
-  var chatText = childsnapshot.val().message;
-  $("#chatTextArea").prepend(chatText + '\r\n');
+  var chatText = childsnapshot.val().message; 
+  var x = sessionStorage.getItem("currentUser");
+  $("#chatTextArea").prepend(x + ": " + chatText + '\r\n');
 });
 
 //function to clear the chatlog upon click of button
@@ -180,16 +173,18 @@ $("#logInUser").on("click", function (event) {
       var p2username = snapshot.val().p2Name;
       if (p1username === "") {
         database.ref().update({
-          p1Name: playerName
+          p1Name: playerName,
         });
         p1Name = playerName;
+        sessionStorage.setItem("currentUser", playerName);
         showButtons();
       }
       else if (p1username !== "" && p2username === "") {
         database.ref().update({
-          p2Name: playerName
+          p2Name: playerName,
         });
         p2Name = playerName;
+        sessionStorage.setItem("currentUser", playerName);
         showButtons();
       }
       else {
@@ -244,12 +239,14 @@ function showButtons() {
       var p2LoggedIn = snapshot.val().p2Name;
       if (p1LoggedIn !== "") {
         $(".p1-button").show();
+        $(".p2-button").hide();
       }
       else if (p1LoggedIn === "") {
         $(".p1-button").hide();
       }
       if (p2LoggedIn !== "") {
         $(".p2-button").show();
+        $(".p1-button").hide();
       }
       else if (p2LoggedIn === "") {
         $(".p2-button").hide();

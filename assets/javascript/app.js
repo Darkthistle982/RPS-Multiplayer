@@ -39,8 +39,8 @@ function reset() {
     p1Choice: initialChoice,
     p2Choice: initialChoice,
   })
-  watchForSnapshot();
 }
+watchForSnapshot();
 reset();
 
 //this function runs the game logic to determine winner, loser and ties and increments the stats

@@ -141,16 +141,17 @@ $("#chatSubmit").on("click", function (event) {
   event.preventDefault();
   message = $("#inputChatText").val().trim();
   database.ref('collection/').push({
-    message: message
+    message: message,
+    currentUser: sessionStorage.getItem("currentUser")
   });
   $("#inputChatText").val(" ");
 });
 
 //function to read and display messages to the chatbox
 database.ref('collection/').on("child_added", function (childsnapshot) {
-  var chatText = childsnapshot.val().message; 
-  var x = sessionStorage.getItem("currentUser");
-  $("#chatTextArea").prepend(x + ": " + chatText + '\r\n');
+  var chatText = childsnapshot.val().message;
+  var userText = childsnapshot.val().currentUser; 
+  $("#chatTextArea").prepend(userText + ": " + chatText + '\r\n');
 });
 
 //function to clear the chatlog upon click of button
